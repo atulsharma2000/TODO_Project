@@ -10,9 +10,13 @@ from django.urls import reverse_lazy           #redirects user to certain page
 
 from .models import Task
 
+from django.contrib.auth.mixins import LoginRequiredMixin   #setting up the restrictions
+                            #add the mixin before the Listview itself 
+
+
 # Create your views here.
 
-class TaskList(ListView):
+class TaskList(LoginRequiredMixin, ListView):       #now view is restricted
     model = Task                # this looks for task_list.html
     context_object_name = 'tasks'       #giving custom name to query set (that was object_list in html)
 
