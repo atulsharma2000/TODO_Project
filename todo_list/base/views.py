@@ -21,25 +21,25 @@ class TaskList(LoginRequiredMixin, ListView):       #now view is restricted
     context_object_name = 'tasks'       #giving custom name to query set (that was object_list in html)
 
 
-class TaskDetail(DetailView):
+class TaskDetail(LoginRequiredMixin, DetailView):
     model = Task                #looks for task_detail.html
     context_object_name = 'task'
     template_name = 'base/task.html'  #customizing the deafult task_detail.html to task.html or other
 
 
-class TaskCreate(CreateView):#looks for base/task_form.html
+class TaskCreate(LoginRequiredMixin, CreateView):#looks for base/task_form.html
     model = Task
     fields = '__all__'      #making all fields['title', 'description']
     success_url = reverse_lazy('tasks')    #passing the url name 'tasks'
 
 
-class TaskUpdate(UpdateView):
+class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task                     #this view also looks for base/task_form.html
     fields = '__all__'     
     success_url = reverse_lazy('tasks')   
 
 
-class DeleteView(DeleteView):
+class DeleteView(LoginRequiredMixin, DeleteView):
     model = Task                    #lookingg for task_confirm_delete.html
     context_object_name = 'task'
     success_url = reverse_lazy('tasks')   
