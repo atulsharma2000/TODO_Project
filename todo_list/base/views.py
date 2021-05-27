@@ -19,6 +19,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin   #setting up the rest
 class TaskList(LoginRequiredMixin, ListView):       #now view is restricted
     model = Task                # this looks for task_list.html
     context_object_name = 'tasks'       #giving custom name to query set (that was object_list in html)
+    
+    def get_context_data(self, **kwargs):                   #making user-specific data
+        context = super().get_context_data(**kwargs)
+        context['tasks'] = context['tasks'].filter(user=self.request.user)
+        context['count'] = context['tasks'].filter(complete=False).count()
+        return context
 
 
 class TaskDetail(LoginRequiredMixin, DetailView):
@@ -29,13 +35,17 @@ class TaskDetail(LoginRequiredMixin, DetailView):
 
 class TaskCreate(LoginRequiredMixin, CreateView):#looks for base/task_form.html
     model = Task
-    fields = '__all__'      #making all fields['title', 'description']
+    fields = ['title', 'description', 'complete']
     success_url = reverse_lazy('tasks')    #passing the url name 'tasks'
+
+    def form_valid(self, form):                         #for user specific input (no other user option)
+        form.instance.user = self.request.user
+        return super(TaskCreate,self).form_valid(form)
 
 
 class TaskUpdate(LoginRequiredMixin, UpdateView):
     model = Task                     #this view also looks for base/task_form.html
-    fields = '__all__'     
+    fields = ['title', 'description', 'complete']     
     success_url = reverse_lazy('tasks')   
 
 
