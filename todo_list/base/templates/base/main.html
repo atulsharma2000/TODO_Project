@@ -12,9 +12,9 @@
     <style>
         body{
             /* background-color: #fff; */
-            background: linear-gradient(to right, #7b4397, #dc2430); 
+            background: #fff; 
             font-family: 'Nunito', sans-serif;
-            padding-top: 50px;
+            /* padding-top: 50px; */
         }
 
         h1,h2,h3,h4,h5,h6{
@@ -32,6 +32,7 @@
             -webkit-box-shadow: 2px 2px 13px -4px rgba(0,0,0,0.21);
             box-shadow: 2px 2px 13px -4px rgba(0,0,0,0.21);
             border-radius: 25px;
+            padding-top: 50px;
         }
         .header-bar{
             display: flex;
@@ -131,12 +132,22 @@
             padding: 20px;
             border-radius: 20px;
         }
+        .navbar {
+    overflow: hidden;
+    background-color: #fff;
+    top: 0; 
+    }
+  
 
     </style>
 
 </head>
 <body>
     
+    <div class="navbar">
+        <img height="100px" width="200px" src="https://www.celebaltech.com/assets/img/celebal.webp" alt="">
+      </div>
+
     <div class="container">
         {% block content %}
 
